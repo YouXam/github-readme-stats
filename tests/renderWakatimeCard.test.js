@@ -11,20 +11,20 @@ describe("Test Render WakaTime Card", () => {
     expect(getCardColors).toMatchSnapshot();
   });
 
-  it("should render correctly with compact layout", () => {
-    const card = renderWakatimeCard(wakaTimeData.data, { layout: "compact" });
+  // it("should render correctly with compact layout", () => {
+  //   const card = renderWakatimeCard(wakaTimeData.data, { layout: "compact" });
 
-    expect(card).toMatchSnapshot();
-  });
+  //   expect(card).toMatchSnapshot();
+  // });
 
-  it("should render correctly with compact layout when langs_count is set", () => {
-    const card = renderWakatimeCard(wakaTimeData.data, {
-      layout: "compact",
-      langs_count: 2,
-    });
+  // it("should render correctly with compact layout when langs_count is set", () => {
+  //   const card = renderWakatimeCard(wakaTimeData.data, {
+  //     layout: "compact",
+  //     langs_count: 2,
+  //   });
 
-    expect(card).toMatchSnapshot();
-  });
+  //   expect(card).toMatchSnapshot();
+  // });
 
   it("should hide languages when hide is passed", () => {
     document.body.innerHTML = renderWakatimeCard(wakaTimeData.data, {

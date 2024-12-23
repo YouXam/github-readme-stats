@@ -11,6 +11,7 @@ class Card {
    * @param {string?=} args.customTitle Card custom title.
    * @param {string?=} args.defaultTitle Card default title.
    * @param {string?=} args.titlePrefixIcon Card title prefix icon.
+   * @param {string?=} args.subtitle Card subtitle.
    * @param {object?=} args.colors Card colors arguments.
    * @param {string} args.colors.titleColor Card title color.
    * @param {string} args.colors.textColor Card text color.
@@ -27,6 +28,7 @@ class Card {
     customTitle,
     defaultTitle = "",
     titlePrefixIcon,
+    subtitle = "",
   }) {
     this.width = width;
     this.height = height;
@@ -48,6 +50,10 @@ class Card {
     this.paddingX = 25;
     this.paddingY = 35;
     this.titlePrefixIcon = titlePrefixIcon;
+    this.subtitle = subtitle;
+    if (this.subtitle) {
+      this.height += 20;
+    }
     this.animations = true;
     this.a11yTitle = "";
     this.a11yDesc = "";
@@ -132,14 +138,28 @@ class Card {
         ${this.titlePrefixIcon}
       </svg>
     `;
+
+    const titleRow = flexLayout({
+      items: [this.titlePrefixIcon && prefixIcon, titleText],
+      gap: 25,
+    }).join("");
+    const subTitleRow = `
+      <text
+        x="0"
+        y="0"
+        class="subheader"
+        data-testid="subheader"
+      >${this.subtitle}</text>
+    `;
     return `
       <g
         data-testid="card-title"
         transform="translate(${this.paddingX}, ${this.paddingY})"
       >
         ${flexLayout({
-          items: [this.titlePrefixIcon && prefixIcon, titleText],
+          items: [titleRow, this.subtitle && subTitleRow],
           gap: 25,
+          direction: "column",
         }).join("")}
       </g>
     `;
@@ -222,9 +242,15 @@ class Card {
             fill: ${this.colors.titleColor};
             animation: fadeInAnimation 0.8s ease-in-out forwards;
           }
+          .subheader {
+            font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+            fill: ${this.colors.textColor};
+            animation: fadeInAnimation 0.8s ease-in-out forwards;
+          }
           @supports(-moz-appearance: auto) {
             /* Selector detects Firefox */
             .header { font-size: 15.5px; }
+            .subheader { font-size: 14px; }
           }
           ${this.css}
 
@@ -259,7 +285,9 @@ class Card {
         <g
           data-testid="main-card-body"
           transform="translate(0, ${
-            this.hideTitle ? this.paddingX : this.paddingY + 20
+            this.hideTitle
+              ? this.paddingX
+              : this.paddingY + 20 + (this.subtitle ? 20 : 0)
           })"
         >
           ${body}

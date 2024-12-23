@@ -392,6 +392,10 @@ const renderWakatimeCard = (stats = {}, options = { hide: [] }) => {
   const card = new Card({
     customTitle: custom_title,
     defaultTitle: titleText,
+    subtitle:
+      stats.human_readable_total_including_other_language +
+      " " +
+      stats.human_readable_range,
     width: 495,
     height,
     border_radius,

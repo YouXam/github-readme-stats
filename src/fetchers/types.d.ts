@@ -109,6 +109,7 @@ export type WakaTimeData = {
   user_id: string;
   username: string;
   writes_only: boolean;
+  human_readable_range: string;
 };
 
 export type WakaTimeLang = {
